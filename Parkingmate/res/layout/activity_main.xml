@@ -7,152 +7,151 @@
     android:layout_gravity="center">
     
     <LinearLayout 
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:background="@drawable/editshape"
-      android:layout_marginLeft="64dp">  
-      <LinearLayout 
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingLeft="14dp" >
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+	      android:orientation="vertical"
+	      android:background="@drawable/editshape"
+	      android:layout_marginLeft="64dp">  
+	      <LinearLayout 
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal"
+			    android:paddingLeft="14dp" >
 
      
-    <EditText android:id="@+id/edit_message1"
-        android:layout_width="wrap_content"            
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:textSize="35sp"
-        android:hint="@string/message1" 
-        android:textColorHint="#000000"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:maxLength="2">       
-        <requestFocus />
-     </EditText>
-     <TextView
-        android:id="@+id/textmessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="35sp"        
-        android:text="@string/colon"/>
-    <EditText android:id="@+id/edit_message2"
-        android:layout_width="wrap_content"            
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:textSize="35sp"
-        android:hint="@string/message2" 
-        android:textColorHint="#000000"        
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:maxLength="2"/>
-    </LinearLayout>        
+    			<EditText android:id="@+id/edit_message1"
+				        android:layout_width="wrap_content"            
+				        android:layout_height="wrap_content"
+				        android:inputType="number"
+				        android:textSize="35sp"
+				        android:hint="@string/message1" 
+				        android:textColorHint="#000000"
+				        android:focusable="true"
+				        android:focusableInTouchMode="true"
+				        android:maxLength="2">       
+				        <requestFocus />
+     			</EditText>
+			    <TextView
+			        android:id="@+id/textmessage"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textSize="35sp"        
+			        android:text="@string/colon"/>
+			    <EditText android:id="@+id/edit_message2"
+			        android:layout_width="wrap_content"            
+			        android:layout_height="wrap_content"
+			        android:inputType="number"
+			        android:textSize="35sp"
+			        android:hint="@string/message2" 
+			        android:textColorHint="#000000"        
+			        android:focusable="true"
+			        android:focusableInTouchMode="true"
+			        android:maxLength="2"/>
+	</LinearLayout>        
                                      
-        <TextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
         android:textColor="#000000"
         android:text="@string/hintmessage" />        
-    </LinearLayout>
+ </LinearLayout>
     
     <TextView
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:layout_marginLeft="64dp"
-     android:layout_marginTop="6dp"
-     android:textColor="#FFFFFF"
-     android:text="@string/reminder_message" />
-    
+	     android:layout_width="wrap_content"
+	     android:layout_height="wrap_content"
+	     android:layout_marginLeft="64dp"
+	     android:layout_marginTop="6dp"
+	     android:textColor="#FFFFFF"
+	     android:text="@string/reminder_message" />
+	    
     <Button 
-    android:id="@+id/start_button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="14dp"        
-    android:layout_marginLeft="94dp"
-    android:paddingLeft="44dp"
-    android:paddingRight="44dp" 
-    android:background="#666633"
-    android:textColor="#FFFFFF"
-    android:onClick="onClick"                      
-    android:text="@string/start_button" />
+	    android:id="@+id/start_button"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="14dp"        
+	    android:layout_marginLeft="94dp"
+	    android:paddingLeft="44dp"
+	    android:paddingRight="44dp" 
+	    android:background="#666633"
+	    android:textColor="#FFFFFF"
+	    android:onClick="onClick"                      
+	    android:text="@string/start_button" />
 
     <TableLayout 
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-       <TableRow
-	   android:layout_width="wrap_content"
-	   android:layout_height="wrap_content" 
-	   android:layout_marginLeft="34dp"
-	   android:layout_marginTop="24dp">
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content">
+	    <TableRow
+		   android:layout_width="wrap_content"
+		   android:layout_height="wrap_content" 
+		   android:layout_marginLeft="34dp"
+		   android:layout_marginTop="24dp">
 
            <LinearLayout 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_column="1">
-	          <Button 
-	           android:layout_width="wrap_content"
-	           android:layout_height="wrap_content"/>
-	          <TextView
-	           android:layout_width="wrap_content"
-	           android:layout_height="wrap_content"
-	           android:textColor="#FFFFFF"
-	           android:text="@string/button1" />	        
-	       </LinearLayout>   
-                    
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal"
+	            android:layout_column="1">
+		        <Button 
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"/>
+	               <TextView
+			           android:layout_width="wrap_content"
+			           android:layout_height="wrap_content"
+			           android:textColor="#FFFFFF"
+			           android:text="@string/button1" />	        
+	       </LinearLayout>                      
            <LinearLayout 
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:orientation="horizontal"
-		    android:layout_column="2"
-		    android:layout_marginLeft="24dp">    
-              <Button 
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"/>
-			  <TextView
-			   android:layout_width="wrap_content"
-			   android:layout_height="wrap_content"
-			   android:textColor="#FFFFFF"			        
-			   android:text="@string/button2" />			        
-           </LinearLayout>   
-                    
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal"
+			    android:layout_column="2"
+			    android:layout_marginLeft="24dp">    
+                <Button 
+	               android:layout_width="wrap_content"
+	               android:layout_height="wrap_content"/>
+			  	   <TextView
+					   android:layout_width="wrap_content"
+					   android:layout_height="wrap_content"
+					   android:textColor="#FFFFFF"			        
+					   android:text="@string/button2" />			        
+           </LinearLayout>                                
       </TableRow>
                 
       <TableRow
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content" 
-       android:layout_marginLeft="34dp">       
-                    
-      	<LinearLayout 
-    	 android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:orientation="horizontal"
-         android:layout_column="1">
-        	<Button 
-         	android:layout_width="wrap_content"
-         	android:layout_height="wrap_content"/>
-        	<TextView
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:text="@string/button3"/>        
-    	</LinearLayout>
-        <LinearLayout 
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:orientation="horizontal"
-        android:layout_column="2"
-        android:layout_marginLeft="24dp">   
-        	<Button 
-         	android:layout_width="wrap_content"
-         	android:layout_height="wrap_content"/>
-        	<TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:textColor="#FFFFFF"
-	        android:text="@string/button4" />
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" 
+	       android:layout_marginLeft="34dp">       
+	                    
+      	   <LinearLayout 
+		    	 android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:orientation="horizontal"
+		         android:layout_column="1">
+		         <Button 
+		         	android:layout_width="wrap_content"
+		         	android:layout_height="wrap_content"/>
+        		<TextView
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textColor="#FFFFFF"
+			        android:text="@string/button3"/>        
+    	  </LinearLayout>
+          <LinearLayout 
+		    	android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+		    	android:orientation="horizontal"
+		        android:layout_column="2"
+		        android:layout_marginLeft="24dp">   
+        	    <Button 
+		         	android:layout_width="wrap_content"
+		         	android:layout_height="wrap_content"
+		         	android:onClick="startSettingsActivity"/>
+        	    <TextView
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textColor="#FFFFFF"
+			        android:text="@string/button4" />
 	     </LinearLayout>                  
      </TableRow>                
   </TableLayout>    

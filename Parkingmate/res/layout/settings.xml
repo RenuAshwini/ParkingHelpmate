@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/settings_image">
+
+    <LinearLayout 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:paddingLeft="14dp" >
+     
+        <TextView
+	        android:id="@+id/settings_text1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"
+	        android:textColor="#ffffff"        
+	        android:text="@string/settings_text1"/>	   
+        <EditText 
+	        android:id="@+id/settings_edit1"
+	        android:layout_width="wrap_content"            
+	        android:layout_height="wrap_content"
+	        android:inputType="number"
+	        android:textSize="20sp"
+	        android:text="@string/settings_edit1"
+	        android:textColor="#ffffff"
+	        android:focusable="true"
+	        android:focusableInTouchMode="true">
+	        <requestFocus />
+        </EditText>        
+        <TextView
+	        android:id="@+id/settings_text2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp" 
+	        android:textColor="#ffffff"  
+	        android:text="@string/settings_text2"/>
+     </LinearLayout> 
+     <RadioGroup
+            android:id="@+id/mts_radiogroup"        
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal">
+            <RadioButton
+	            android:id="@+id/fivemts_button"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/btn1"
+	            android:checked="true"
+	            android:textColor="#ffffff"
+	            android:onClick="onmtsButtonClicked"/>
+        	<RadioButton
+	            android:id="@+id/tenmts_button"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/btn2" 
+	            android:textColor="#ffffff" 
+	            android:onClick="onmtsButtonClicked"/>
+           <RadioButton
+                android:id="@+id/fifteenmts_button"            
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/btn3" 
+	            android:textColor="#ffffff" 
+	            android:onClick="onmtsButtonClicked"
+	            android:checked="true"/>
+           <RadioButton
+                android:id="@+id/other_button"            
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/btn4" 
+	            android:textColor="#ffffff"
+	            android:onClick="onmtsButtonClicked"/>    
+    </RadioGroup>    
+</LinearLayout>    

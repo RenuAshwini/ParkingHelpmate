@@ -11,11 +11,11 @@
         ></stroke>
 
     <corners
-        android:radius="1dp"
-        android:bottomLeftRadius="5dp"
-        android:bottomRightRadius="5dp"
-        android:topLeftRadius="5dp"
-        android:topRightRadius="5dp" >
+        android:radius="0.5dp"
+        android:bottomLeftRadius="0.25dp"
+        android:bottomRightRadius="0.25dp"
+        android:topLeftRadius="0.25dp"
+        android:topRightRadius="0.25dp" >
     </corners>
 
 </shape>

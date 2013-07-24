@@ -1,5 +1,5 @@
 /**************************************************************************************
-Copyright � 2013 Renu Biradar and Ashwini Guttal
+Copyright (C) 2013 Renu Biradar and Ashwini Guttal
 
 This program is free software: you can redistribute it and/or modify it under 
 the terms of the GNU General Public License as published by the Free Software Foundation, 
@@ -26,6 +26,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -33,7 +34,11 @@ import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.EditText;
- 
+
+/*********************************************************************************************************
+** ParkingTimer is used to allow users to enter the parking meter time to set the alert
+*********************************************************************************************************/ 
+
 public class ParkingTimer extends Activity implements OnClickListener
     {
 	    final Context context = this;
@@ -51,7 +56,6 @@ public class ParkingTimer extends Activity implements OnClickListener
         EditText editAId;
         EditText editBId;
 
-        /** Called when the activity is first created. */
         @Override
         public void onCreate(Bundle savedInstanceState)
             {
@@ -96,9 +100,9 @@ public class ParkingTimer extends Activity implements OnClickListener
             
             startTime = hourTime + minuteTime;
             countDownTimer = new MalibuCountDownTimer(startTime, interval);
-
            
             Button b = (Button) v;
+            /* if the button pressed is start button, start the timer*/
             if(b.getText().toString() == "Start")
         	{
               startB.setText("Stop");
@@ -175,7 +179,7 @@ public class ParkingTimer extends Activity implements OnClickListener
                 @Override
                 public void onTick(long millisUntilFinished)
                     {
-                        //text.setText("Time remain:" + millisUntilFinished);
+                	/* send an alert at "millisuntilFinished" before the timer expires */
                 	if((!alertSent) && (millisUntilFinished < 10000))
                 	{
                 		AlertDialog.Builder alertDialogBuilder1 = new AlertDialog.Builder(context);
@@ -192,14 +196,12 @@ public class ParkingTimer extends Activity implements OnClickListener
             						// if this button is clicked, close current activity
             						dialog.cancel();
             					}
-            				  });
-            				  
+            				  });			  
             				
              
             				// create alert dialog
             				AlertDialog alertDialog1 = alertDialogBuilder1.create();
-             
-            				// show it
+            				
             				alertDialog1.show();
             				alertSent = true;
 
@@ -209,11 +211,16 @@ public class ParkingTimer extends Activity implements OnClickListener
         
     	@Override
     	public boolean onCreateOptionsMenu(Menu menu) {
-    		// Inflate the menu; this adds items to the action bar if it is present.
     		getMenuInflater().inflate(R.menu.main, menu);
     		return true;
     	}
-
+    	
+    	/* Start new activity on the click of "Settings" button */
+    	public void startSettingsActivity(View view) {
+    		Intent intent = new Intent(this, AlertSettings.class);
+    	    startActivity(intent);   
+    	    }
+    	
     }
 
 

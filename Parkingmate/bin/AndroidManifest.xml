@@ -22,6 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+	        android:name="com.example.Parkingmate.AlertSettings"
+	        android:label="@string/title_activity_AlertSettings"
+	        android:parentActivityName="com.example.Parkingmate.ParkingTimer" >
+	        <meta-data
+	            android:name="android.support.PARENT_ACTIVITY"
+	            android:value="com.example.Parkingmate.ParkingTimer" />
+       </activity>
     </application>
 
 </manifest>

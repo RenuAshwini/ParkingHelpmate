@@ -57,13 +57,34 @@
         android:text="@string/hintmessage" />        
  </LinearLayout>
     
-    <TextView
-	     android:layout_width="wrap_content"
-	     android:layout_height="wrap_content"
-	     android:layout_marginLeft="64dp"
-	     android:layout_marginTop="6dp"
-	     android:textColor="#FFFFFF"
-	     android:text="@string/reminder_message" />
+   
+     <LinearLayout 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:paddingLeft="14dp" >
+     
+        <TextView
+	        android:id="@+id/reminder_text1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	     	android:textColor="#FFFFFF"
+	     	android:text="@string/reminder_message" />
+        <TextView 
+	        android:id="@+id/reminder_text2"
+	        android:layout_width="wrap_content"            
+	        android:layout_height="wrap_content"
+	        android:paddingLeft="5dp"
+	        android:paddingRight="5dp"
+	        android:text="@string/settings_text2"
+	        android:textColor="#ffffff"/>
+        <TextView
+	        android:id="@+id/reminder_text3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textColor="#ffffff"  
+	        android:text="@string/settings_text3"/>
+     </LinearLayout>    
 	    
     <Button 
 	    android:id="@+id/start_button"

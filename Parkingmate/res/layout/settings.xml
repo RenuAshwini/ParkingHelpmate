@@ -24,7 +24,7 @@
 	        android:layout_height="wrap_content"
 	        android:inputType="number"
 	        android:textSize="20sp"
-	        android:text="@string/settings_edit1"
+	        android:text="@string/settings_text2"
 	        android:textColor="#ffffff"
 	        android:focusable="true"
 	        android:focusableInTouchMode="true">
@@ -36,7 +36,7 @@
 	        android:layout_height="wrap_content"
 	        android:textSize="20sp" 
 	        android:textColor="#ffffff"  
-	        android:text="@string/settings_text2"/>
+	        android:text="@string/settings_text3"/>
      </LinearLayout> 
      <RadioGroup
             android:id="@+id/mts_radiogroup"        

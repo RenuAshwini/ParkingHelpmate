@@ -20,6 +20,8 @@ email: renu@pdx.edu and aguttal@pdx.edu
 package com.example.Parkingmate;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -39,7 +41,6 @@ public class AlertSettings extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
       editmts = (EditText) this.findViewById(R.id.settings_edit1);
-           
         
     }
 
@@ -77,4 +78,44 @@ public class AlertSettings extends Activity {
 
         }
     }
+    
+    // Update the reminder minutes from Alertsettings activity in ParkingTimer activity on the click 
+    // of back button
+    @Override
+    public void onBackPressed() {
+    String mtsdata = editmts.getText().toString();
+    Intent intent = new Intent();
+    intent.putExtra("2", mtsdata);
+    setResult(Activity.RESULT_OK, intent);
+    finish();
+    }
+    
+    
+    @Override
+    protected void onPause() 
+    {
+      super.onPause();
+      
+      // Save the values of current instance of the activity when on pause
+      SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+      SharedPreferences.Editor editor = preferences.edit();  // Put the values from the UI
+      String savedMts = editmts.getText().toString();
+      
+      
+      editor.putString("Name", savedMts); // value to store
+      
+      // Commit to storage
+      editor.commit();
+    } 
+    
+    @Override
+    protected void onResume() 
+    {
+      super.onResume();
+      
+      // Retrieve values between instances here
+      SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+      editmts.setText(preferences.getString("Name", null));
+    }
+
 }

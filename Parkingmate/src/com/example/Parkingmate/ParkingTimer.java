@@ -34,6 +34,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 /*********************************************************************************************************
 ** ParkingTimer is used to allow users to enter the parking meter time to set the alert
@@ -55,6 +56,7 @@ public class ParkingTimer extends Activity implements OnClickListener
         String editB;
         EditText editAId;
         EditText editBId;
+        TextView editreminderId;
 
         @Override
         public void onCreate(Bundle savedInstanceState)
@@ -64,6 +66,8 @@ public class ParkingTimer extends Activity implements OnClickListener
                 startB = (Button) this.findViewById(R.id.start_button);
                 editAId = (EditText) this.findViewById(R.id.edit_message1);
                 editBId = (EditText) this.findViewById(R.id.edit_message2);
+                editreminderId = (TextView) this.findViewById(R.id.reminder_text2);
+
                 startB.setOnClickListener(this); 
                 
 
@@ -204,7 +208,7 @@ public class ParkingTimer extends Activity implements OnClickListener
             				
             				alertDialog1.show();
             				alertSent = true;
-
+    
                 	}
                     }
             }
@@ -215,12 +219,33 @@ public class ParkingTimer extends Activity implements OnClickListener
     		return true;
     	}
     	
-    	/* Start new activity on the click of "Settings" button */
+    	// Start new activity on the click of "Settings" button 
     	public void startSettingsActivity(View view) {
     		Intent intent = new Intent(this, AlertSettings.class);
-    	    startActivity(intent);   
+    		startActivityForResult(intent, 1);   
     	    }
     	
+    	@Override 
+    	public void onActivityResult(int requestCode, int resultCode, Intent data) {     
+    	  super.onActivityResult(requestCode, resultCode, data); 
+    	  switch(requestCode) { 
+    	    case (1) : { 
+    	      if (resultCode == Activity.RESULT_OK) 
+    	         { 
+    	    	  	String newText = data.getStringExtra("2");
+    	    	  	if(newText.isEmpty() == false)
+    	    	  	{
+    	    	  	if(Integer.parseInt(newText) != 0)
+    	    	  		{
+    	    	  		editreminderId.setText(newText);
+    	    	  		}
+    	    	  	}
+    	         } 
+    	      break; 
+    	    } 
+    	  } 
+    	}
+
     }
 
 

@@ -48,7 +48,6 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="@string/btn1"
-	            android:checked="true"
 	            android:textColor="#ffffff"
 	            android:onClick="onmtsButtonClicked"/>
         	<RadioButton
@@ -73,5 +72,66 @@
 	            android:text="@string/btn4" 
 	            android:textColor="#ffffff"
 	            android:onClick="onmtsButtonClicked"/>    
+    </RadioGroup>
+    
+    <TextView
+	        android:id="@+id/settings_text4"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:paddingLeft="15dp"
+	        android:paddingTop="30dp"
+	        android:textSize="20sp"
+	        android:textColor="#ffffff"        
+	        android:text="@string/settings_text4"/>   
+	 
+    <RadioGroup
+            android:id="@+id/mts_radiogroup1"        
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical">         
+            
+            <RadioButton
+	            android:id="@+id/alertSound1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/alertbtn1"
+	            android:textColor="#ffffff"
+	            android:onClick="onSoundButtonClicked"/>
+        	<RadioButton
+	            android:id="@+id/alertSound2"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/alertbtn2" 
+	            android:textColor="#ffffff" 
+	            android:onClick="onSoundButtonClicked"/>            
+           <RadioButton
+                android:id="@+id/alertSound3"            
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/alertbtn3" 
+	            android:textColor="#ffffff" 
+	            android:onClick="onSoundButtonClicked"
+	            android:checked="true"/>
+           <RadioButton
+                android:id="@+id/alertSound4"            
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/alertbtn4" 
+	            android:textColor="#ffffff"
+	            android:onClick="onSoundButtonClicked"/> 
+	      <RadioButton
+                android:id="@+id/alertSound5"            
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/alertbtn5" 
+	            android:textColor="#ffffff"
+	            android:onClick="onSoundButtonClicked"/>
+	      <RadioButton
+                android:id="@+id/alertSound6"            
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/alertbtn6" 
+	            android:textColor="#ffffff"
+	            android:onClick="onSoundButtonClicked"/>
     </RadioGroup>    
 </LinearLayout>    

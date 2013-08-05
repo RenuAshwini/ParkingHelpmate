@@ -19,17 +19,18 @@
 			    android:paddingLeft="14dp" >
 
      
-    			<EditText android:id="@+id/edit_message1"
-				        android:layout_width="wrap_content"            
-				        android:layout_height="wrap_content"
-				        android:inputType="number"
-				        android:textSize="35sp"
-				        android:hint="@string/message1" 
-				        android:textColorHint="#000000"
-				        android:focusable="true"
-				        android:focusableInTouchMode="true"
-				        android:maxLength="2">       
-				        <requestFocus />
+    			<EditText 
+    			    android:id="@+id/edit_message1"
+				    android:layout_width="wrap_content"            
+				    android:layout_height="wrap_content"
+				    android:inputType="number"
+				    android:textSize="35sp"
+				    android:hint="@string/message1" 
+				    android:textColorHint="#000000"
+				    android:focusable="true"
+				    android:focusableInTouchMode="true"
+				    android:maxLength="2">       
+				    <requestFocus />
      			</EditText>
 			    <TextView
 			        android:id="@+id/textmessage"
@@ -55,14 +56,13 @@
         android:layout_marginLeft="24dp"
         android:textColor="#000000"
         android:text="@string/hintmessage" />        
- </LinearLayout>
-    
+ </LinearLayout>    
    
      <LinearLayout 
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:orientation="horizontal"
-	    android:paddingLeft="14dp" >
+	    android:paddingLeft="44dp" >
      
         <TextView
 	        android:id="@+id/reminder_text1"
@@ -94,9 +94,8 @@
 	    android:layout_marginLeft="94dp"
 	    android:paddingLeft="44dp"
 	    android:paddingRight="44dp" 
-	    android:background="#666633"
+	    android:background="@drawable/rounded_button"
 	    android:textColor="#FFFFFF"
-	    android:onClick="onClick"                      
 	    android:text="@string/start_button" />
 
     <TableLayout 
@@ -114,8 +113,10 @@
 	            android:orientation="horizontal"
 	            android:layout_column="1">
 		        <Button 
-		           android:layout_width="wrap_content"
-		           android:layout_height="wrap_content"/>
+		           android:id="@+id/tag_button"		           
+		           android:layout_width="60dp"
+		           android:layout_height="45dp"
+		           android:background="@drawable/map"/>
 	               <TextView
 			           android:layout_width="wrap_content"
 			           android:layout_height="wrap_content"
@@ -129,13 +130,17 @@
 			    android:layout_column="2"
 			    android:layout_marginLeft="24dp">    
                 <Button 
-	               android:layout_width="wrap_content"
-	               android:layout_height="wrap_content"/>
-			  	   <TextView
-					   android:layout_width="wrap_content"
-					   android:layout_height="wrap_content"
-					   android:textColor="#FFFFFF"			        
-					   android:text="@string/button2" />			        
+                	android:id="@+id/notes_button"		           
+                   	android:layout_width="60dp"
+	                android:layout_height="45dp"
+	                android:onClick="startNotesActivity"
+	                android:background="@drawable/notes"/>
+	              	               
+			  	<TextView
+			 		android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textColor="#FFFFFF"			        
+					android:text="@string/button2" />			        
            </LinearLayout>                                
       </TableRow>
                 
@@ -150,9 +155,13 @@
 		         android:orientation="horizontal"
 		         android:layout_column="1">
 		         <Button 
-		         	android:layout_width="wrap_content"
-		         	android:layout_height="wrap_content"/>
-        		<TextView
+		            android:id="@+id/findcar_button"	             
+		         	android:layout_width="60dp"
+		         	android:layout_height="45dp"
+		         	android:layout_marginTop="10dp"
+		            android:background="@drawable/map2"/>
+		         
+        		 <TextView
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:textColor="#FFFFFF"
@@ -164,10 +173,14 @@
 		    	android:orientation="horizontal"
 		        android:layout_column="2"
 		        android:layout_marginLeft="24dp">   
-        	    <Button 
-		         	android:layout_width="wrap_content"
-		         	android:layout_height="wrap_content"
-		         	android:onClick="startSettingsActivity"/>
+        	    <Button 		           
+        	        android:id="@+id/settings_button"	        	        
+		         	android:layout_width="60dp"
+		         	android:layout_height="45dp"
+		        	android:layout_marginTop="10dp" 
+		         	android:onClick="startSettingsActivity"
+		         	android:background="@drawable/settings"/>
+
         	    <TextView
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"

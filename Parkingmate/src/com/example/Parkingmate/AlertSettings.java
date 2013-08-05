@@ -1,4 +1,7 @@
 /**************************************************************************************
+ParkingHelpmate- An open source android project to keep track of parking meter time
+Application written in Java
+
 Copyright (C) 2013 Renu Biradar and Ashwini Guttal
 
 This program is free software: you can redistribute it and/or modify it under 
@@ -21,7 +24,7 @@ package com.example.Parkingmate;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -29,12 +32,13 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 /*********************************************************************************************************
-** AlertSettings is used to allow users to doing the settings for the reminder alert  
+** AlertSettings is used to allow users to change the settings for the reminder alert  
 *********************************************************************************************************/ 
 
 public class AlertSettings extends Activity {
 	
 	EditText editmts;
+	MediaPlayer ourSong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +55,11 @@ public class AlertSettings extends Activity {
 	}
     
     public void onmtsButtonClicked(View view) {
+    	
         // Checks if the radio button is checked
        boolean checked = ((RadioButton) view).isChecked();
         
-        // Check which radio button was clicked and perform the corresponding operation 
+        // Checks to see which radio button was clicked and performs the corresponding operation 
         switch(view.getId()) {
             case R.id.fivemts_button:
             	if(checked)
@@ -91,31 +96,47 @@ public class AlertSettings extends Activity {
     }
     
     
-    @Override
-    protected void onPause() 
-    {
-      super.onPause();
-      
-      // Save the values of current instance of the activity when on pause
-      SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-      SharedPreferences.Editor editor = preferences.edit();  // Put the values from the UI
-      String savedMts = editmts.getText().toString();
-      
-      
-      editor.putString("Name", savedMts); // value to store
-      
-      // Commit to storage
-      editor.commit();
-    } 
     
-    @Override
-    protected void onResume() 
-    {
-      super.onResume();
-      
-      // Retrieve values between instances here
-      SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-      editmts.setText(preferences.getString("Name", null));
-    }
+    
+    //Changes the tone of alert sound to the specified tone on the click of Sound button 
+    public void onSoundButtonClicked(View view) {
+    	ourSong = MediaPlayer.create(AlertSettings.this, R.raw.tritone);
+    	
+		// Checks to see if the radio button has been checked
+	       boolean checked = ((RadioButton) view).isChecked();
+	        
+	        // Checks to see which radio button is clicked and performs the corresponding operation 
+	        switch(view.getId()) {
+	            case R.id.alertSound1:
+	            	if(checked)
+	            	{
+	            		ourSong.start();
+	            	}
+	            	break;
+	            case R.id.alertSound2:
+	            	if(checked)
+	            		{
 
-}
+	            		ourSong.start();
+	            		}
+	            	break;
+	            case R.id.alertSound3:
+	            	if(checked)
+	            	{
+	            		
+	            	ourSong.start();
+	            	}
+	                break;	
+	            case R.id.alertSound4:
+	            	if(checked)
+	            	{
+	            		ourSong.start();   
+	            	}
+	                break;	    
+
+	        }
+	     }
+     }
+
+    
+

@@ -1,4 +1,7 @@
 /**************************************************************************************
+ParkingHelpmate- An open source android project to keep track of parking meter time
+Application written in Java
+
 Copyright (C) 2013 Renu Biradar and Ashwini Guttal
 
 This program is free software: you can redistribute it and/or modify it under 
@@ -24,12 +27,16 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.widget.Button;
@@ -50,10 +57,12 @@ public class ParkingTimer extends Activity implements OnClickListener
         private  long startTime = 20000;
         private  long hourTime = 0;
         private  long minuteTime = 0;
-        private final long interval = 5000;
-        public  int value;
+        private  long interval = 5000;
+        private  long alertTime = 0;
+        private  long checkAlertTime = 10 * 60 * 1000;   
         String editA;
         String editB;
+		String parkingNotes = "";
         EditText editAId;
         EditText editBId;
         TextView editreminderId;
@@ -67,6 +76,10 @@ public class ParkingTimer extends Activity implements OnClickListener
                 editAId = (EditText) this.findViewById(R.id.edit_message1);
                 editBId = (EditText) this.findViewById(R.id.edit_message2);
                 editreminderId = (TextView) this.findViewById(R.id.reminder_text2);
+                Button butt = (Button) this.findViewById(R.id.tag_button);
+                butt.setBackgroundResource(R.drawable.settings_image);
+                
+                startB.setText("Start");
 
                 startB.setOnClickListener(this); 
                 
@@ -82,48 +95,86 @@ public class ParkingTimer extends Activity implements OnClickListener
 
 					
                 });
+                
+               editAId.setOnTouchListener(new OnTouchListener(){
+                	
+                   
+					@Override
+					public boolean onTouch(View arg0, MotionEvent arg1) {
+						editAId.setText("");
+	                    return false;
+					}
+                });
+                
+                editBId.setOnTouchListener(new OnTouchListener(){
+                	
+                    
+					@Override
+					public boolean onTouch(View arg0, MotionEvent arg1) {
+						editBId.setText("");
+	                    return false;
+					}
+                });
+
 
             }
  
         @Override
         public void onClick(View v)
             {
-        	        	
+        	
+        	// Get the hour and minutes as entered by user
             editA = editAId.getText().toString();
-            editB = ((EditText) this.findViewById(R.id.edit_message2)).getText().toString();
+            editB = editBId.getText().toString();
 
+            // Check if the input entered by user contains data
             if(editA.isEmpty() == false && !editA.contentEquals("hh"))
             {
                 hourTime = Integer.parseInt(editA) * 3600 * 1000;
             }
             
+            // Check if the input entered by user contains data
             if(editB.isEmpty() == false && !editB.contentEquals("mm"))
             {
             	minuteTime = Integer.parseInt(editB) * 60 * 1000;
             }
             
             startTime = hourTime + minuteTime;
+                        
+            //Initialise the timer with the minutes as entered by user
             countDownTimer = new MalibuCountDownTimer(startTime, interval);
            
             Button b = (Button) v;
-            /* if the button pressed is start button, start the timer*/
-            if(b.getText().toString() == "Start")
+            
+            /* If the user clicks on Start button, then start the timer */
+            if((b.getText().toString() == "Start") && !timerHasStarted)
         	{
-              startB.setText("Stop");
               countDownTimer.start();
               timerHasStarted = true;
+              startB.setText("Stop");
+              editAId.setEnabled(false);
+              editBId.setEnabled(false);
+
             }
             else
-            {
-               startB.setText("Start");
+            {               
                
                if(timerHasStarted)
                {
                   countDownTimer.cancel();
-               }
+                  
+               
                
                timerHasStarted = false;
+               startB.setText("Start");
+               editAId.setEnabled(true);
+               editBId.setEnabled(true);
+               editAId.setText("00");
+               editBId.setText("00");
+               editAId.requestFocus();
+               }
              }
+                    	
         	
                 
            }
@@ -145,37 +196,44 @@ public class ParkingTimer extends Activity implements OnClickListener
                         if(startB.getText().toString() == "Stop")
                         {	
 
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                        	LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+                       		View layout = inflater.inflate(R.layout.alert_dialog, (ViewGroup) findViewById(R.id.layout_root));
+
+                       		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                       		alertDialogBuilder.setView(layout);
+                       		
+                       		// create alert dialog
+            				final AlertDialog alertDialog = alertDialogBuilder.create();
+
+                       		
+                    		Button OkButton = (Button) layout.findViewById(R.id.ok_button);
+                    		
+            				// On click of OK button, set the input time back to zero and close the alert dialog box            						
+                    		OkButton.setOnClickListener(new OnClickListener() {
+                    						@Override
+                    						public void onClick(View v) {
+                    							editAId.setEnabled(true);
+                    							editBId.setEnabled(true);
+                    							editAId.setText("00");
+                            					editBId.setText("00");
+                            					editAId.requestFocus();
+                            					alertDialog.dismiss();               							
+                   							
+                    						}
+                    					});
+
              
-            			// set title
-            			alertDialogBuilder.setTitle("Alert");
-             
-            			// set dialog message
-            			alertDialogBuilder
-            				.setMessage("Your timer expired")
-            				.setCancelable(false)
-            				.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-            					public void onClick(DialogInterface dialog,int id) {
-            						// if this button is clicked, close current activity
-            						ParkingTimer.this.finish();
-            					}
-            				  })
-            				.setNegativeButton("No",new DialogInterface.OnClickListener() {
-            					public void onClick(DialogInterface dialog,int id) {
-            						// if this button is clicked, just close
-            						// the dialog box and do nothing
-            						dialog.cancel();
-            					}
-            				});
-             
-            				// create alert dialog
-            				AlertDialog alertDialog = alertDialogBuilder.create();
-             
+                       		// set dialog message
+                       		alertDialogBuilder
+            				.setCancelable(false);
+            				
+                                    		
             				// show it
             				alertDialog.show();
                         	}
-            				
-                            startB.setText("Start");
+            			
+                        	// Change the text of the button to Start once the timer expires
+                          	startB.setText("Start");
 
                       }
                     
@@ -183,35 +241,53 @@ public class ParkingTimer extends Activity implements OnClickListener
                 @Override
                 public void onTick(long millisUntilFinished)
                     {
-                	/* send an alert at "millisuntilFinished" before the timer expires */
-                	if((!alertSent) && (millisUntilFinished < 10000))
-                	{
-                		AlertDialog.Builder alertDialogBuilder1 = new AlertDialog.Builder(context);
-             
-            			// set title
-            			alertDialogBuilder1.setTitle("Reminder");
-             
-            			// set dialog message
-            			alertDialogBuilder1
-            				.setMessage("Your timer will expire in 10 mts")
-            				.setCancelable(false)
-            				.setPositiveButton("OK",new DialogInterface.OnClickListener() {
-            					public void onClick(DialogInterface dialog,int id) {
-            						// if this button is clicked, close current activity
-            						dialog.cancel();
-            					}
-            				  });			  
-            				
-             
-            				// create alert dialog
-            				AlertDialog alertDialog1 = alertDialogBuilder1.create();
-            				
-            				alertDialog1.show();
-            				alertSent = true;
-    
-                	}
+                	
+                	// Set the reminder alert time based on the settings as provided by user
+                	String alertMessage = editreminderId.getText().toString();
+                	alertTime = Integer.parseInt(editreminderId.getText().toString()) * 60 * 1000;
+                    
+                    if(alertTime !=0)
+                    {
+                    	checkAlertTime = alertTime;
                     }
-            }
+                    
+                	/* send an alert to the user before the timer expires */
+                	if((!alertSent) && (millisUntilFinished <= checkAlertTime) && (checkAlertTime < startTime))
+                	{
+                		LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+                   		View layout = inflater.inflate(R.layout.alert_dialog, (ViewGroup) findViewById(R.id.layout_root));
+
+                   		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                   		alertDialogBuilder.setView(layout);
+                   		
+                   		// create alert dialog
+        				final AlertDialog alertDialog = alertDialogBuilder.create();
+
+                		TextView reminderText = (TextView) layout.findViewById(R.id.textmessage);
+                		
+                		reminderText.setText("Your timer will expire in " + alertMessage + " mts");
+
+                		Button OkButton = (Button) layout.findViewById(R.id.ok_button);
+                		
+        				// On click of OK button, set the input time back to zero and close the alert dialog box            						
+                		OkButton.setOnClickListener(new OnClickListener() {
+                						@Override
+                						public void onClick(View v) {
+                							alertDialog.dismiss();            							
+                						  }
+                					});
+
+         
+                   		// set dialog message
+                   		alertDialogBuilder
+        				.setCancelable(false);        				
+                                		
+        				// show alert dialog
+        				alertDialog.show();
+            			alertSent = true;    
+                	  }
+                      }
+                 }
         
     	@Override
     	public boolean onCreateOptionsMenu(Menu menu) {
@@ -219,7 +295,7 @@ public class ParkingTimer extends Activity implements OnClickListener
     		return true;
     	}
     	
-    	// Start new activity on the click of "Settings" button 
+    	// Starts new activity on the click of "Settings" button 
     	public void startSettingsActivity(View view) {
     		Intent intent = new Intent(this, AlertSettings.class);
     		startActivityForResult(intent, 1);   
@@ -242,17 +318,58 @@ public class ParkingTimer extends Activity implements OnClickListener
     	    	  	}
     	         } 
     	      break; 
-    	    } 
+   	    	   }
+  	         } 
     	  } 
-    	}
+    	
+    	
+    	// Starts new activity on the click of "Add Notes" button 
+    	public void startNotesActivity(View view) {
+    		
+    		// custom dialog to save the parking notes   		
+    		LayoutInflater factory = LayoutInflater.from(this);
+    		final View deleteDialogView = factory.inflate(R.layout.notes_dialog, null);
 
-    }
+    		final Dialog dialog = new Dialog(context, R.style.Theme_Dialog);
 
-
-
-
-
-
+    		dialog.setContentView(deleteDialogView);
+    		dialog.setTitle("Title...");
+    		 
+    		// set the custom dialog components - text, image and button
+    		 final EditText text = (EditText) dialog.findViewById(R.id.edit_message2);
+    					
+    		if(!parkingNotes.isEmpty())
+    			{
+    				text.setText(parkingNotes);
+    			}
+    					
+    		Button dialogCancelButton = (Button) dialog.findViewById(R.id.cancel_button);
+    		
+    		// On click of Cancel button, close the dialog without saving the notes 
+    		dialogCancelButton.setOnClickListener(new OnClickListener() {
+    						@Override
+    						public void onClick(View v) {
+    						parkingNotes = "";
+   							dialog.dismiss();
+    						}
+    					});
+    					
+    		Button dialogOkButton = (Button) dialog.findViewById(R.id.save_button);
+    		
+    		// On click of Save button, save the notes and return back to the main activity
+    		dialogOkButton.setOnClickListener(new OnClickListener() {
+    						@Override
+    						public void onClick(View v) {
+    							
+    						parkingNotes = text.getText().toString();
+    						dialog.dismiss();
+    						}
+    					});
+    		 
+    		dialog.show();
+    		
+    			}
+       }
 
 
 

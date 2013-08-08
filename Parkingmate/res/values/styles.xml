@@ -10,8 +10,7 @@
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         -->
-    </style>
-    
+    </style>    
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
@@ -21,7 +20,6 @@
     <style name="Theme_Dialog" parent="android:Theme.Light">
      <item name="android:windowNoTitle">true</item>
      <item name="android:windowBackground">@android:color/transparent</item>
-</style>
-    
+</style>    
 
 </resources>

@@ -1,0 +1,41 @@
+<!--**************************************************************************************
+** ParkingHelpmate- An open source android project to keep track of parking meter time
+** Application written in Java
+** Application uses Google Maps Android API v2
+
+** Copyright (C) 2013 Renu Biradar and Ashwini Guttal
+**
+** This program is free software: you can redistribute it and/or modify it under 
+** the terms of the GNU General Public License as published by the Free Software Foundation, 
+** either version 3 of the License, or (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+** without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License along with this program. 
+** If not, see http://www.gnu.org/licenses/.
+** Below is the link to the file License.
+** https://github.com/RenuAshwini/ParkingHelpmate/License
+**
+** Following is the link for the repository- https://github.com/RenuAshwini/ParkingHelpmate
+**
+**
+** Author - Renu Biradar and Ashwini Guttal
+** email: renu@pdx.edu and aguttal@pdx.edu
+**
+** References - 
+** License - 
+******************************************************************************************-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >     
+    <fragment
+        android:id="@+id/loc_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.MapFragment" />    
+</RelativeLayout>

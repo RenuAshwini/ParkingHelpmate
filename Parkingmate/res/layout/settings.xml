@@ -9,8 +9,7 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:orientation="horizontal"
-	    android:paddingLeft="14dp" >
-     
+	    android:paddingLeft="14dp" >     
         <TextView
 	        android:id="@+id/settings_text1"
 	        android:layout_width="wrap_content"
@@ -72,8 +71,7 @@
 	            android:text="@string/btn4" 
 	            android:textColor="#ffffff"
 	            android:onClick="onmtsButtonClicked"/>    
-    </RadioGroup>
-    
+    </RadioGroup>    
     <TextView
 	        android:id="@+id/settings_text4"
 	        android:layout_width="wrap_content"
@@ -88,8 +86,7 @@
             android:id="@+id/mts_radiogroup1"        
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:orientation="vertical">         
-            
+	        android:orientation="vertical">              
             <RadioButton
 	            android:id="@+id/alertSound1"
 	            android:layout_width="wrap_content"

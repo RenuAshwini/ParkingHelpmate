@@ -1,3 +1,33 @@
+<!--**************************************************************************************
+** ParkingHelpmate- An open source android project to keep track of parking meter time
+** Application written in Java
+** Application uses Google Maps Android API v2
+
+** Copyright (C) 2013 Renu Biradar and Ashwini Guttal
+**
+** This program is free software: you can redistribute it and/or modify it under 
+** the terms of the GNU General Public License as published by the Free Software Foundation, 
+** either version 3 of the License, or (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+** without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License along with this program. 
+** If not, see http://www.gnu.org/licenses/.
+** Below is the link to the file License.
+** https://github.com/RenuAshwini/ParkingHelpmate/License
+**
+** Following is the link for the repository- https://github.com/RenuAshwini/ParkingHelpmate
+**
+**
+** Author - Renu Biradar and Ashwini Guttal
+** email: renu@pdx.edu and aguttal@pdx.edu
+**
+** References - 
+** License - 
+******************************************************************************************-->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,9 +46,7 @@
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:orientation="horizontal"
-			    android:paddingLeft="14dp" >
-
-     
+			    android:paddingLeft="14dp" >     
     			<EditText 
     			    android:id="@+id/edit_message1"
 				    android:layout_width="wrap_content"            
@@ -62,8 +90,7 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:orientation="horizontal"
-	    android:paddingLeft="44dp" >
-     
+	    android:paddingLeft="44dp" >     
         <TextView
 	        android:id="@+id/reminder_text1"
 	        android:layout_width="wrap_content"
@@ -116,6 +143,7 @@
 		           android:id="@+id/tag_button"		           
 		           android:layout_width="60dp"
 		           android:layout_height="45dp"
+		           android:onClick="onClick_tag"			           
 		           android:background="@drawable/map"/>
 	               <TextView
 			           android:layout_width="wrap_content"
@@ -134,21 +162,18 @@
                    	android:layout_width="60dp"
 	                android:layout_height="45dp"
 	                android:onClick="startNotesActivity"
-	                android:background="@drawable/notes"/>
-	              	               
+	                android:background="@drawable/notes"/>	              	               
 			  	<TextView
 			 		android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:textColor="#FFFFFF"			        
 					android:text="@string/button2" />			        
            </LinearLayout>                                
-      </TableRow>
-                
+      </TableRow>                
       <TableRow
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content" 
-	       android:layout_marginLeft="34dp">       
-	                    
+	       android:layout_marginLeft="34dp">                    
       	   <LinearLayout 
 		    	 android:layout_width="wrap_content"
 		         android:layout_height="wrap_content"
@@ -159,8 +184,8 @@
 		         	android:layout_width="60dp"
 		         	android:layout_height="45dp"
 		         	android:layout_marginTop="10dp"
-		            android:background="@drawable/map2"/>
-		         
+		         	android:onClick="onClick_locate"		         	
+		            android:background="@drawable/map2"/>		         
         		 <TextView
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
@@ -180,7 +205,6 @@
 		        	android:layout_marginTop="10dp" 
 		         	android:onClick="startSettingsActivity"
 		         	android:background="@drawable/settings"/>
-
         	    <TextView
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"

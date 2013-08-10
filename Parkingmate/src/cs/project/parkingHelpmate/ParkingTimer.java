@@ -40,7 +40,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -48,12 +47,11 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 
 /*********************************************************************************************************
 ** ParkingTimer is used to allow users to enter the parking meter time to receive the reminder alerts at 
@@ -66,7 +64,7 @@ public class ParkingTimer extends Activity implements OnClickListener, TextWatch
 	    final Context context = this;
         private MyCountDownTimer countDownTimer;
         private boolean timerHasStarted = false;
-        private boolean alertSent = false;
+        private boolean alertFlag = false;
         private Button startB; 
         private Button tagButton;
         private  long startTime = 20000;
@@ -82,8 +80,8 @@ public class ParkingTimer extends Activity implements OnClickListener, TextWatch
         TextView editreminderId;
   	    private double dest_lat = 0.0;
   	    private double dest_long = 0.0;
-  		MediaPlayer alertTone;
-        int toneID = 1;
+  		private MediaPlayer alertTone;
+  		private int toneID = 1;
 
         @Override
         public void onCreate(Bundle savedInstanceState)
@@ -99,7 +97,7 @@ public class ParkingTimer extends Activity implements OnClickListener, TextWatch
 
                 editAId.addTextChangedListener(this);
 
-                startB.setText("Start");                
+                startB.setText("START");                
                 
                 startB.setOnClickListener(this);            
                 
@@ -167,11 +165,12 @@ public class ParkingTimer extends Activity implements OnClickListener, TextWatch
            
             // If the user clicks on Start button, then starts the count down timer, disables the hour 
             // and minute fields and changes the text of start button to "Stop"
-            if((b.getText().toString() == "Start") && !timerHasStarted && !(startTime == 0))
+            if((b.getText().toString() == "START") && !timerHasStarted && !(startTime == 0))
         	{
+    		  alertFlag = false;  
               countDownTimer.start();
               timerHasStarted = true;
-              startB.setText("Stop");
+              startB.setText("STOP");
               editAId.setEnabled(false);
               editBId.setEnabled(false);
             }
@@ -182,9 +181,10 @@ public class ParkingTimer extends Activity implements OnClickListener, TextWatch
                // and minute fields and changes the text of Stop button to "Start"  
                if(timerHasStarted)
                {
+               alertFlag = true;
                countDownTimer.cancel();               
                timerHasStarted = false;
-               startB.setText("Start");
+               startB.setText("START");
                editAId.setEnabled(true);
                editBId.setEnabled(true);
                editAId.setText("00");
@@ -211,10 +211,10 @@ public class ParkingTimer extends Activity implements OnClickListener, TextWatch
                 	
                 		// Sends an alert to the user notifying the expiration of parking meter time if the user
                 	    // has not stopped the timer by then
-                        if(startB.getText().toString() == "Stop")
+                        if(startB.getText().toString() == "STOP")
                         {	
                         	// Updates the alert tone with the user specified tone
-                        	//updateTone();
+                        	updateTone();
                         	                       		
                         	LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
                        		View layout = inflater.inflate(R.layout.alert_dialog, (ViewGroup) findViewById(R.id.layout_root));
@@ -248,12 +248,12 @@ public class ParkingTimer extends Activity implements OnClickListener, TextWatch
                                     		
             				// Shows the alert dialog
             				alertDialog.show();
-                       		//alertTone.start();
+                       		alertTone.start();
 
                         	}
             			
                         	// Changes the text of the Start button to "Start" once the timer expires
-                          	startB.setText("Start");
+                          	startB.setText("START");
 
                       }
                     
@@ -272,11 +272,11 @@ public class ParkingTimer extends Activity implements OnClickListener, TextWatch
                     
                     
                 	/* Sends an alert to the user at the user specified minutes before the timer expires */
-                	if((!alertSent) && (millisUntilFinished <= alertTime) && (alertTime < startTime))
+                	if((!alertFlag) && (millisUntilFinished <= alertTime) && (alertTime < startTime))
                 	{
                     	
                 		// Updates the alert tone with the user specified tone
-                		//updateTone();
+                		updateTone();
                    		                   		
                 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
                    		View layout = inflater.inflate(R.layout.alert_dialog, (ViewGroup) findViewById(R.id.layout_root));
@@ -284,13 +284,13 @@ public class ParkingTimer extends Activity implements OnClickListener, TextWatch
                    		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                    		alertDialogBuilder.setView(layout);
                    		
+                   		
                    		// Creates alert dialog to dispaly the reminder alert message
         				final AlertDialog alertDialog = alertDialogBuilder.create();
-
                 		TextView reminderText = (TextView) layout.findViewById(R.id.textmessage2);
                 		
                 		// Updates the text of the alert message based on the minutes in the reminder text on the screen
-                		reminderText.setText("Your timer will expire in " + alertMessage + " minutes");
+                		reminderText.setText("Timer will expire in " + alertMessage + " minutes");
 
                 		Button OkButton = (Button) layout.findViewById(R.id.ok_button);
                 		
@@ -307,10 +307,10 @@ public class ParkingTimer extends Activity implements OnClickListener, TextWatch
                    		
         				// Shows the alert dialog
         				alertDialog.show();
-                   		//alertTone.start();
+                   		alertTone.start();
         				
         				// Flag to indicate that the reminder alert dialog has been displayed
-            			alertSent = true;    
+            			alertFlag = true;    
                 	  }
                     }
                   }
@@ -338,7 +338,9 @@ public class ParkingTimer extends Activity implements OnClickListener, TextWatch
     	      if (resultCode == Activity.RESULT_OK) 
     	         { 
     	    	  	String newText = data.getStringExtra("minutesdata");
+    	    	  	
     	    	  	toneID = data.getIntExtra("sounddata", 1);
+    	    	  	
     	    	  	if(newText.isEmpty() == false)
     	    	  	{
     	    	  	if(Integer.parseInt(newText) != 0)
@@ -364,12 +366,12 @@ public class ParkingTimer extends Activity implements OnClickListener, TextWatch
     	public void startNotesActivity(View view) {
     		
     		// Custom dialog to save the parking notes entered by user  		
-    		LayoutInflater factory = LayoutInflater.from(this);
-    		final View deleteDialogView = factory.inflate(R.layout.notes_dialog, null);
+    		/*LayoutInflater factory = LayoutInflater.from(this);
+    		final View deleteDialogView = factory.inflate(R.layout.notes_dialog, null);*/
 
-    		final Dialog dialog = new Dialog(context, R.style.Theme_Dialog);
+    		final Dialog dialog = new Dialog(context, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
     		
-    		dialog.setContentView(deleteDialogView);
+    		dialog.setContentView(R.layout.notes_dialog);
     		    		 
     		// Set the custom dialog components - EditText and Buttons
     		 final EditText text = (EditText) dialog.findViewById(R.id.edit_message3);

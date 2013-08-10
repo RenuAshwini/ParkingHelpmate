@@ -47,7 +47,7 @@ public class AlertSettings extends Activity {
 	
 	private EditText editmts;
 	private MediaPlayer mySong;
-	private int selectedSound;
+	private int selectedSound = 1;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,18 +73,23 @@ public class AlertSettings extends Activity {
             case R.id.fivemts_button:
             	if(checked)
             	editmts.setText("5");
+            	editmts.setEnabled(false);
             	break;
             case R.id.tenmts_button:
             	if(checked)
+                	editmts.setEnabled(false);
             	editmts.setText("10");
             	break;
             case R.id.fifteenmts_button:
             	if(checked)
+                	editmts.setEnabled(false);
+
             	editmts.setText("15");
                 break;	
             case R.id.other_button:
             	if(checked)
-            	{
+            	{            	editmts.setEnabled(true);
+
             		editmts.setText("");
                 	editmts.requestFocus();   
             	}
@@ -171,6 +176,11 @@ public class AlertSettings extends Activity {
 	                break;
 	        }
 	     }
+    
+    public void onClick_Home(View view)
+    {
+    	onBackPressed();
+    }
      }
 
     

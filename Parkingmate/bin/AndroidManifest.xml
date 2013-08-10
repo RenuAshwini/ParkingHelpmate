@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cs.project.parkingHelpmate"
+    package="cs.project.parkingHelpmate1"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -9,9 +9,9 @@
         android:targetSdkVersion="18" />
     
         <permission
-        android:name="cs.project.parkingHelpmate.permission.MAPS_RECEIVE"
+        android:name="cs.project.parkingHelpmate1.permission.MAPS_RECEIVE"
         android:protectionLevel="signature"/>
-    <uses-permission android:name="cs.project.parkingHelpmate.permission.MAPS_RECEIVE"/>
+    <uses-permission android:name="cs.project.parkingHelpmate1.permission.MAPS_RECEIVE"/>
     
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -32,7 +32,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="cs.project.parkingHelpmate.ParkingTimer"
+            android:name="cs.project.parkingHelpmate1.ParkingTimer"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,32 +41,32 @@
             </intent-filter>
         </activity>
         <activity
-	        android:name="cs.project.parkingHelpmate.AlertSettings"
+	        android:name="cs.project.parkingHelpmate1.AlertSettings"
 	        android:label="@string/title_activity_AlertSettings"
-	        android:parentActivityName="cs.project.parkingHelpmate.ParkingTimer" >
+	        android:parentActivityName="cs.project.parkingHelpmate1.ParkingTimer" >
 	        <meta-data
 	            android:name="android.support.PARENT_ACTIVITY"
-	            android:value="cs.project.parkingHelpmate.ParkingTimer" />
+	            android:value="cs.project.parkingHelpmate1.ParkingTimer" />
        </activity>
        <activity
-	        android:name="cs.project.parkingHelpmate.tagActivity"
+	        android:name="cs.project.parkingHelpmate1.tagActivity"
 	        android:label="@string/title_activity_AlertSettings"
-	        android:parentActivityName="cs.project.parkingHelpmate.ParkingTimer" >
+	        android:parentActivityName="cs.project.parkingHelpmate1.ParkingTimer" >
 	        <meta-data
 	            android:name="android.support.PARENT_ACTIVITY"
-	            android:value="cs.project.parkingHelpmate.ParkingTimer" />
+	            android:value="cs.project.parkingHelpmate1.ParkingTimer" />
        </activity><activity
-	        android:name="cs.project.parkingHelpmate.locateActivity"
+	        android:name="cs.project.parkingHelpmate1.locateActivity"
 	        android:label="@string/title_activity_AlertSettings"
-	        android:parentActivityName="cs.project.parkingHelpmate.ParkingTimer" >
+	        android:parentActivityName="cs.project.parkingHelpmate1.ParkingTimer" >
 	        <meta-data
 	            android:name="android.support.PARENT_ACTIVITY"
-	            android:value="cs.project.parkingHelpmate.ParkingTimer" />
+	            android:value="cs.project.parkingHelpmate1.ParkingTimer" />
        </activity>
        
          <meta-data
     android:name="com.google.android.maps.v2.API_KEY"
-    android:value="AIzaSyD9XlOxpBqP3r372c7v0EFm_O0g96Yq9ac"/>
+    android:value="AIzaSyBjGYB0Q_BnwgICxNERxBPC81rMS8UZi_U"/>
        
        
     </application>

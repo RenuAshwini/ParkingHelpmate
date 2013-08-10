@@ -31,6 +31,7 @@ package cs.project.parkingHelpmate;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -39,22 +40,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.net.Uri;
 import android.content.Context;
 import android.content.Intent;
-import cs.project.parkingHelpmate.R;
+import cs.project.parkingHelpmate1.R;
 
 /*********************************************************************************************************
 ** locateActivity is used to tag the current location of the user on google map and to get the directions 
@@ -65,73 +65,105 @@ public class locateActivity extends Activity implements OnMarkerClickListener, L
 	
 	private GoogleMap loc_gMap;
     final Context context = this;
-
-	//private LocationManager locationManager;
+    private Location lastKnownLocation;
+	private Location currentLocation;
+	private LocationManager locationManager;
 	LatLng src_lat_loc;
 	LatLng dest_lat_loc;
-    private double dest_lat;
-    private double dest_long;
-	
+    private double dest_lat = 0.0;
+    private double dest_long = 0.0;
+	private String LOCATION_SERVICE="location" ;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.locatelayout);
-		
-		LocationManager locationManager;
-	    String bestProvider;
-	    String LOCATION_SERVICE="location" ;
+		setContentView(R.layout.locatelayout);		
 	    
 		// Save the location data obtained from tagActivity as the destination location
 		Intent intent_data = getIntent();
 		dest_lat =  intent_data.getDoubleExtra("destlat", 0.0);
 		dest_long =  intent_data.getDoubleExtra("destlong", 0.0);
 		dest_lat_loc = new LatLng(dest_lat, dest_long);
-
 		
 		loc_gMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.loc_map)).getMap();		
-		loc_gMap.setMyLocationEnabled(true);		  
-	
+		loc_gMap.setMyLocationEnabled(true);		
 		loc_gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);  		
 		 
 	     locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-	     Criteria criteria = new Criteria();
-	         
-	      // More accurate location data
-	      criteria.setAccuracy(Criteria.ACCURACY_FINE);  
-	         
-	      bestProvider = locationManager.getBestProvider(criteria,true);
-	      
-	      if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-	    	  
-	    	  // Requests the periodic updates from the GPS location provider if the GPS provider is enabled
-		      locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000,0, this);
-		      
-	    	  }
-	      else{
-	    	  
-	    	  // Display the alert dialog asking the user if he wants to enable the GPS in the settings if the GPS provider is not enabled
-	    	  alertGPSDisabled();
-	    	  
-	    	  }	         
-	      
-	      Location location = locationManager.getLastKnownLocation(bestProvider);
-	      
-		  //Initialize the destination location fields
-	      if (location != null) {
-		    	 
-	    	  //onLocationChanged(location);	
-	    	  src_lat_loc = new LatLng(location.getLatitude(), location.getLongitude());
-	  		//loc_gMap.animateCamera(CameraUpdateFactory.newLatLng(src_lat_loc));
-	  		loc_gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(src_lat_loc, 18.0f));
-	  		loc_gMap.addMarker(new MarkerOptions().position(new LatLng(src_lat_loc.latitude, src_lat_loc.longitude))
-	  				  .title("Your Car is here, click on marker for directions").icon(BitmapDescriptorFactory.fromResource(R.drawable.car))).showInfoWindow();
+	     
+	     if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+		    	
+	    	 // Requests the periodic updates from the GPS location provider if the GPS provider is enabled
+	    	 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000,0, this);
+	    	 lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		    }
+	     else if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+	    	 {
+	    	 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000,0, this);
+	    	 lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+    	
+		    }
+	     else
+	     {
+	    	 final Dialog dialog = new Dialog(context, R.style.Theme_Dialog);
+	 		
+	 		dialog.setContentView(R.layout.confirmdialog);
+	 		    		 
+	 		// Set the custom dialog components - EditText and Buttons
+	  		Button dialogOkButton = (Button) dialog.findViewById(R.id.yesbutton);
+	  		EditText noProviderMessage = (EditText) dialog.findViewById(R.id.confirmmessage);
+            
+	  		noProviderMessage.setText("GPS and Network providers are unavailable");
+	 		
+	 		// Closes the dialog on click of OK button 
+	 		dialogOkButton.setOnClickListener(new OnClickListener() {
+	 						@Override
+	 						public void onClick(View v) {
+	 							dialog.dismiss();
+	 							onBackPressed();              							
 
-	            }
-	      else{
-	    	  Toast.makeText(this, "Could not retrieve the location data ", Toast.LENGTH_SHORT).show();                    
-	                  }
-	 
+	 						}
+	 					});
+	 		 
+	 		dialog.show();
+
+	    	 //Toast.makeText(this, "GPS and Network providers are not available", Toast.LENGTH_SHORT).show();
+	     }    
+	     
+	     //Initialize the destination location fields
+	     if (lastKnownLocation != null) {
+	    	 
+	    	 currentLocation = lastKnownLocation; 	
+	    	 
+	    	 }
+	     else{
+	    	 final Dialog dialog = new Dialog(context, R.style.Theme_Dialog);
+		 		
+		 		dialog.setContentView(R.layout.confirmdialog);
+		 		    		 
+		 		// Set the custom dialog components - EditText and Buttons
+		  		Button dialogOkButton = (Button) dialog.findViewById(R.id.yesbutton);
+		  		EditText noProviderMessage = (EditText) dialog.findViewById(R.id.confirmmessage);
+	            
+		  		noProviderMessage.setText("Could not retrieve location");
+		 		
+		 		// Closes the dialog on click of OK button 
+		 		dialogOkButton.setOnClickListener(new OnClickListener() {
+		 						@Override
+		 						public void onClick(View v) {
+		 							dialog.dismiss();
+		 							onBackPressed();              							
+
+		 						}
+		 					});
+		 		 
+		 		dialog.show();
+
+	    	 
+	    	 //Toast.makeText(this, "Could not retrieve the location data ", Toast.LENGTH_SHORT).show();
+	    	 }		
+	     	  	 
 	      loc_gMap.setOnMarkerClickListener(this);
 			  
 		 }
@@ -157,12 +189,12 @@ public class locateActivity extends Activity implements OnMarkerClickListener, L
 		 }
 		 
 		 // Pass both the source and destination location data to find the directions between both locations
-		 /*Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+src_lat_loc.latitude+","+src_lat_loc.longitude+"&daddr="+dest_lat_loc.latitude+","+dest_lat_loc.longitude));
-         startActivity(intent);*/
-         
-         Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("google.navigation:q=" + dest_lat_loc.latitude + "," + dest_lat_loc.longitude));
-         
+		 Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+src_lat_loc.latitude+","+src_lat_loc.longitude+"&daddr="+dest_lat_loc.latitude+","+dest_lat_loc.longitude));
          startActivity(intent);
+         
+         /*Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("google.navigation:q=" + dest_lat_loc.latitude + "," + dest_lat_loc.longitude));
+         
+         startActivity(intent);*/
 	  
 	   return true;
 	 }
@@ -170,12 +202,26 @@ public class locateActivity extends Activity implements OnMarkerClickListener, L
 	 @Override
 	public void onLocationChanged(Location loc) {
 		// Save the latest location data	
-	/*	src_lat_loc = new LatLng(loc.getLatitude(), loc.getLongitude());
-		//loc_gMap.animateCamera(CameraUpdateFactory.newLatLng(src_lat_loc));
-		loc_gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(src_lat_loc, 18.0f));
-		loc_gMap.addMarker(new MarkerOptions().position(new LatLng(src_lat_loc.latitude, src_lat_loc.longitude))
-				  .title("Your Car is here"));*/
-		   
+		 
+			if(currentLocation == null)
+			{
+				currentLocation = loc;
+			}
+			else if (loc.distanceTo(currentLocation) > 2)	
+			 {
+				currentLocation = loc;			 
+				 
+			}
+			else
+			{
+				// Do nothing. Keep the currentLocation to be the last known location
+			}
+			 
+			 locationManager.removeUpdates(this);
+			 src_lat_loc = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+			 loc_gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(src_lat_loc, 18.0f));
+		  	 loc_gMap.addMarker(new MarkerOptions().position(new LatLng(src_lat_loc.latitude, src_lat_loc.longitude))
+		  				  .title("Click on marker for directions")).showInfoWindow();		   
 		}
 		
 	public void onProviderEnabled(String provider) {
@@ -237,4 +283,4 @@ public class locateActivity extends Activity implements OnMarkerClickListener, L
 
 	
 	
-
+ 

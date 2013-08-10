@@ -1,4 +1,5 @@
-<!--**************************************************************************************
+<!--
+**************************************************************************************
 ** ParkingHelpmate- An open source android project to keep track of parking meter time
 ** Application written in Java
 ** Application uses Google Maps Android API v2
@@ -26,36 +27,39 @@
 **
 ** References - 
 ** License - 
-******************************************************************************************-->
-
+******************************************************************************************
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="280dp"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_width="350dp"
+    android:layout_height="100dp"
     android:layout_gravity="center"
-    android:background="@drawable/rounded_bluecolor">
-    
+    android:background="@drawable/gold_button_004"
+    android:orientation="vertical" >
+
     <TextView
-		android:id="@+id/confirmmessage"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:textSize="18sp"  
-		android:layout_gravity="center"    
-		android:layout_marginTop="15dp"  
-		android:text="@string/confirm_message"/>	
-		
-		<Button
-			android:id="@+id/yesbutton"
-			android:layout_width="75dp"
-			android:layout_height="35dp"
-			android:layout_marginBottom="10dp"
-			android:layout_marginTop="10dp"			
-			android:layout_gravity="center"
-			android:background="@drawable/rounded_button"
-			android:text="@string/ok_button"
-			android:clickable="true"
-			android:layout_weight="1"
-			android:textColor="#FFFFFF" />    
-</LinearLayout>        
-	      
+        android:id="@+id/confirmmessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="15dp"
+        android:text="@string/confirm_message"
+        android:textColor="#172751"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/yesbutton"
+        android:layout_width="74dp"
+        android:layout_height="26dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/fall_but_12"
+        android:clickable="true"
+        android:text="@string/ok_button"
+        android:textColor="#FFD700" />
+
+</LinearLayout>

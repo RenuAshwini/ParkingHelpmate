@@ -2,133 +2,192 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/settings_image">
+    android:layout_gravity="center"
+    android:background="@drawable/blue_background1"
+    android:orientation="vertical" >
 
-    <LinearLayout 
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal"
-	    android:paddingLeft="14dp" >     
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/gold_frame"
+        android:orientation="horizontal"
+        android:paddingLeft="14dp" >
+
         <TextView
-	        android:id="@+id/settings_text1"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:textSize="20sp"
-	        android:textColor="#ffffff"        
-	        android:text="@string/settings_text1"/>	   
-        <EditText 
-	        android:id="@+id/settings_edit1"
-	        android:layout_width="wrap_content"            
-	        android:layout_height="wrap_content"
-	        android:inputType="number"
-	        android:textSize="20sp"
-	        android:text="@string/settings_text2"
-	        android:textColor="#ffffff"
-	        android:focusable="true"
-	        android:focusableInTouchMode="true">
-	        <requestFocus />
-        </EditText>        
+            android:id="@+id/settings_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:paddingLeft="15dp"
+            android:text="@string/settings_text1"
+            android:textColor="#FFD700"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/settings_edit1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="1dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:inputType="number"
+            android:paddingLeft="5dp"
+            android:text="@string/settings_text2"
+            android:textColor="#FFD700"
+            android:textSize="18sp" >
+
+            <requestFocus />
+        </EditText>
+
         <TextView
-	        android:id="@+id/settings_text2"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:textSize="20sp" 
-	        android:textColor="#ffffff"  
-	        android:text="@string/settings_text3"/>
-     </LinearLayout> 
-     <RadioGroup
-            android:id="@+id/mts_radiogroup"        
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal">
-            <RadioButton
-	            android:id="@+id/fivemts_button"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/btn1"
-	            android:textColor="#ffffff"
-	            android:onClick="onmtsButtonClicked"/>
-        	<RadioButton
-	            android:id="@+id/tenmts_button"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/btn2" 
-	            android:textColor="#ffffff" 
-	            android:onClick="onmtsButtonClicked"/>
-           <RadioButton
-                android:id="@+id/fifteenmts_button"            
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/btn3" 
-	            android:textColor="#ffffff" 
-	            android:onClick="onmtsButtonClicked"
-	            android:checked="true"/>
-           <RadioButton
-                android:id="@+id/other_button"            
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/btn4" 
-	            android:textColor="#ffffff"
-	            android:onClick="onmtsButtonClicked"/>    
-    </RadioGroup>    
-    <TextView
-	        android:id="@+id/settings_text4"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:paddingLeft="15dp"
-	        android:paddingTop="30dp"
-	        android:textSize="20sp"
-	        android:textColor="#ffffff"        
-	        android:text="@string/settings_text4"/>   
-	 
+            android:id="@+id/settings_text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/settings_text3"
+            android:textColor="#FFD700"
+            android:textSize="18sp" />
+    </LinearLayout>
+
     <RadioGroup
-            android:id="@+id/mts_radiogroup1"        
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:orientation="vertical">              
-            <RadioButton
-	            android:id="@+id/alertSound1"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/alertbtn1"
-	            android:textColor="#ffffff"
-	            android:onClick="onSoundButtonClicked"/>
-        	<RadioButton
-	            android:id="@+id/alertSound2"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/alertbtn2" 
-	            android:textColor="#ffffff" 
-	            android:onClick="onSoundButtonClicked"/>            
-           <RadioButton
-                android:id="@+id/alertSound3"            
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/alertbtn3" 
-	            android:textColor="#ffffff" 
-	            android:onClick="onSoundButtonClicked"
-	            android:checked="true"/>
-           <RadioButton
-                android:id="@+id/alertSound4"            
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/alertbtn4" 
-	            android:textColor="#ffffff"
-	            android:onClick="onSoundButtonClicked"/> 
-	      <RadioButton
-                android:id="@+id/alertSound5"            
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/alertbtn5" 
-	            android:textColor="#ffffff"
-	            android:onClick="onSoundButtonClicked"/>
-	      <RadioButton
-                android:id="@+id/alertSound6"            
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/alertbtn6" 
-	            android:textColor="#ffffff"
-	            android:onClick="onSoundButtonClicked"/>
-    </RadioGroup>    
-</LinearLayout>    
+        android:id="@+id/mts_radiogroup"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/fivemts_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onmtsButtonClicked"
+            android:text="@string/btn1"
+            android:textColor="#FFD700"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/tenmts_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onmtsButtonClicked"
+            android:text="@string/btn2"
+            android:textColor="#FFD700"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/fifteenmts_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:onClick="onmtsButtonClicked"
+            android:text="@string/btn3"
+            android:textColor="#FFD700"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/other_button"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:onClick="onmtsButtonClicked"
+            android:text="@string/btn4"
+            android:textColor="#FFD700"
+            android:textSize="16sp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/settings_text4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="15dp"
+        android:text="@string/settings_text4"
+        android:textColor="#FFD700"
+        android:textSize="18sp" />
+
+    <RadioGroup
+        android:id="@+id/mts_radiogroup1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <RadioButton
+            android:id="@+id/alertSound1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:onClick="onSoundButtonClicked"
+            android:text="@string/alertbtn1"
+            android:textColor="#FFD700"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/alertSound2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:onClick="onSoundButtonClicked"
+            android:text="@string/alertbtn2"
+            android:textColor="#FFD700"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/alertSound3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:checked="true"
+            android:onClick="onSoundButtonClicked"
+            android:text="@string/alertbtn3"
+            android:textColor="#FFD700"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/alertSound4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:onClick="onSoundButtonClicked"
+            android:text="@string/alertbtn4"
+            android:textColor="#FFD700"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/alertSound5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:onClick="onSoundButtonClicked"
+            android:text="@string/alertbtn5"
+            android:textColor="#FFD700"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/alertSound6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:onClick="onSoundButtonClicked"
+            android:text="@string/alertbtn6"
+            android:textColor="#FFD700"
+            android:textSize="18sp" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/home_button"
+        android:layout_width="107dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.08"
+        android:background="@drawable/fall_but_5"
+        android:text="@string/home_button"
+        android:onClick="onClick_Home"
+        android:textColor="#172751"
+        android:textSize="18sp" />
+
+</LinearLayout>

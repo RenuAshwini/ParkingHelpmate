@@ -26,14 +26,13 @@
 ** References - 
 ** License - 
 ******************************************************************************************-->
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_root"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="300dp"
+    android:layout_height="175dp"
     android:layout_gravity="center"
-    android:background="@drawable/rounded_alert"
+    android:background="@drawable/gold_button_004"
     android:orientation="vertical" >
 
     <TextView
@@ -41,31 +40,38 @@
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="105dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/alert_title"
-        android:textSize="18sp" />
+        android:layout_marginTop="40dp"
+        android:paddingLeft="15dp"
+        android:textColor="#172751"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/textmessage2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="25dp"
+        android:background="@drawable/rounded_nocolor"
+        android:paddingBottom="5dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:background="@drawable/rounded_nocolor"        
         android:text="@string/alert_message"
+        android:textColor="#172751"
         android:textSize="18sp" />
+
     <Button
         android:id="@+id/ok_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="95dp"
+        android:layout_width="117dp"
+        android:layout_height="44dp"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/rounded_button"
+        android:layout_marginLeft="75dp"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/fall_but_12"
         android:text="@string/ok_button"
-        android:textColor="#FFFFFF"/>       
+        android:textColor="#FFD700"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+       
 </LinearLayout>

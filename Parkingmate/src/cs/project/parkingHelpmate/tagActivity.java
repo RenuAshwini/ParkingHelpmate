@@ -42,18 +42,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.MarkerOptions;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.content.Context;
 import android.content.Intent;
-import cs.project.parkingHelpmate.R;
+import cs.project.parkingHelpmate1.R;
 
 /*********************************************************************************************************
 ** tagActivity is used to tag the current location of the parked vehicle on google map and to save the 
@@ -63,63 +57,76 @@ import cs.project.parkingHelpmate.R;
 
 public class tagActivity extends Activity implements LocationListener{
 	
-	private GoogleMap mMap;
 	LatLng des_lat_loc;
     final Context context = this;	
+	LocationManager locationManager_tag;
+	private Location location;
+	private Location currentBestLocation = null;
+	private String LOCATION_SERVICE="location" ;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.taglayout);	
 		
-		LocationManager locationManager_tag;
-	    String bestProvider;
-	    String LOCATION_SERVICE="location" ;
-		
-		//mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();		
-		//mMap.setMyLocationEnabled(true);
-		  
-		//mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);			  		
+		//LocationManager locationManager_tag;
+	   		
 		 
 	     locationManager_tag = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-	     Criteria criteria = new Criteria();
-	     
-	      // More accurate location data
-	     criteria.setAccuracy(Criteria.ACCURACY_FINE); 
-	     
-	     // Get the best provider that satisfies the given criteria
-	     bestProvider = locationManager_tag.getBestProvider(criteria,true);
-	     
-	     // Checks if the GPS provider is enabled
-	     if (locationManager_tag.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+	     	     
+	     if (locationManager_tag.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
 		    	
 	    	 // Requests the periodic updates from the GPS location provider if the GPS provider is enabled
+	    	 locationManager_tag.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000,0, this);
+	    	 location = locationManager_tag.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		    }
+	     else if(locationManager_tag.isProviderEnabled(LocationManager.GPS_PROVIDER))
+	    	 {
 	    	 locationManager_tag.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000,0, this);
-	    	 
+	    	 location = locationManager_tag.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+    	
 		    }
-	     else{
-	    	      
-	    	 // Display the alert dialog asking the user if he wants to enable the GPS in the settings   	  
-	    	 alertGPSDisabled();
+	     else
+	     {
 	    	 
-		    }
-	      
-	     // Get the last known location from the best provider
-	     Location location = locationManager_tag.getLastKnownLocation(bestProvider);
+	     }
 	     
-	     //Initialize the destination location fields
+	     
+	     
+	   //Initialize the destination location fields
 	     if (location != null) {
-	    		des_lat_loc = new LatLng(location.getLatitude(), location.getLongitude());
-	    	    confirmDialog();
-
-	    	 //onLocationChanged(location);
+	    	 
+	    	 currentBestLocation = location; 	
 	    	 
 	    	 }
 	     else{
 	    	 
-	    	 Toast.makeText(this, "Could not retrieve the location data ", Toast.LENGTH_SHORT).show();
+	    	 final Dialog dialog = new Dialog(context, R.style.Theme_Dialog);
+		 		
+		 		dialog.setContentView(R.layout.confirmdialog);
+		 		    		 
+		 		// Set the custom dialog components - EditText and Buttons
+		  		Button dialogOkButton = (Button) dialog.findViewById(R.id.yesbutton);
+		  		EditText noProviderMessage = (EditText) dialog.findViewById(R.id.confirmmessage);
+	            
+		  		noProviderMessage.setText("Could not retrieve location");
+		 		
+		 		// Closes the dialog on click of OK button 
+		 		dialogOkButton.setOnClickListener(new OnClickListener() {
+		 						@Override
+		 						public void onClick(View v) {
+		 							dialog.dismiss();
+		 							onBackPressed();              							
+
+		 						}
+		 					});
+		 		 
+		 		dialog.show();
+
+
+	    	 //Toast.makeText(this, "Could not retrieve the location data ", Toast.LENGTH_SHORT).show();
 	    	 
-	         }			  
+	     }		  
 		 }
 	
 	//Send the destination latitude and longitude back to the ParkingTimer activity on click of back button
@@ -143,14 +150,24 @@ public class tagActivity extends Activity implements LocationListener{
 	@Override
 	public void onLocationChanged(Location loc) {
 		
-	// Save the location data on change of the location	
-	//des_lat_loc = new LatLng(loc.getLatitude(), loc.getLongitude());
-    //confirmDialog();
-	//mMap.animateCamera(CameraUpdateFactory.newLatLng(des_lat_loc));
-	//mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(des_lat_loc, 18.0f));
-
-	 //mMap.addMarker(new MarkerOptions().position(new LatLng(des_lat_loc.latitude, des_lat_loc.longitude))
-		 // .title("Your Car is here"));                         
+		if(currentBestLocation == null)
+		{
+			currentBestLocation = loc;
+		}
+		else if (loc.distanceTo(currentBestLocation) > 2)	
+		 {
+			 currentBestLocation = loc;			 
+			 
+		}
+		else
+		{
+			// Do nothing. Keep the currentBestLocation to be the last known location
+		}
+		 
+		 locationManager_tag.removeUpdates(this);
+		 des_lat_loc = new LatLng(currentBestLocation.getLatitude(), currentBestLocation.getLongitude());
+		 confirmDialog();
+	                     
 
 	}
 	
@@ -214,9 +231,7 @@ public class tagActivity extends Activity implements LocationListener{
 	public void confirmDialog()
 	{
 		// Custom dialog to save the parking notes entered by user  		
-		/*LayoutInflater factory = LayoutInflater.from(this);
-		final View deleteDialogView = factory.inflate(R.layout.confirmdialog, null);*/
-
+		
 		final Dialog dialog = new Dialog(context, R.style.Theme_Dialog);
 		
 		dialog.setContentView(R.layout.confirmdialog);

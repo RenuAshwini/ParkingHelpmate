@@ -42,7 +42,7 @@
         </activity>
         <activity
 	        android:name="cs.project.parkingHelpmate1.AlertSettings"
-	        android:label="@string/title_activity_AlertSettings"
+	        android:label="@string/app_name"
 	        android:parentActivityName="cs.project.parkingHelpmate1.ParkingTimer" >
 	        <meta-data
 	            android:name="android.support.PARENT_ACTIVITY"
@@ -50,14 +50,14 @@
        </activity>
        <activity
 	        android:name="cs.project.parkingHelpmate1.tagActivity"
-	        android:label="@string/title_activity_AlertSettings"
+	        android:label="@string/app_name"
 	        android:parentActivityName="cs.project.parkingHelpmate1.ParkingTimer" >
 	        <meta-data
 	            android:name="android.support.PARENT_ACTIVITY"
 	            android:value="cs.project.parkingHelpmate1.ParkingTimer" />
        </activity><activity
 	        android:name="cs.project.parkingHelpmate1.locateActivity"
-	        android:label="@string/title_activity_AlertSettings"
+	        android:label="@string/app_name"
 	        android:parentActivityName="cs.project.parkingHelpmate1.ParkingTimer" >
 	        <meta-data
 	            android:name="android.support.PARENT_ACTIVITY"

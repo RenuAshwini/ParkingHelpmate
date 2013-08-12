@@ -27,7 +27,7 @@
 ** License - 
 ******************************************************************************************/
 
-package cs.project.parkingHelpmate;
+package cs.project.parkingHelpmate1;
 
 import android.app.Activity;
 import android.content.Intent;

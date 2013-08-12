@@ -27,17 +27,14 @@
 ** License - 
 ******************************************************************************************/
 
-package cs.project.parkingHelpmate;
+package cs.project.parkingHelpmate1;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -97,6 +94,8 @@ public class locateActivity extends Activity implements OnMarkerClickListener, L
 	    	 // Requests the periodic updates from the GPS location provider if the GPS provider is enabled
 	    	 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000,0, this);
 	    	 lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+	    	 
+	    	 
 		    }
 	     else if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
 	    	 {
@@ -106,35 +105,15 @@ public class locateActivity extends Activity implements OnMarkerClickListener, L
 		    }
 	     else
 	     {
-	    	 final Dialog dialog = new Dialog(context, R.style.Theme_Dialog);
-	 		
-	 		dialog.setContentView(R.layout.confirmdialog);
-	 		    		 
-	 		// Set the custom dialog components - EditText and Buttons
-	  		Button dialogOkButton = (Button) dialog.findViewById(R.id.yesbutton);
-	  		EditText noProviderMessage = (EditText) dialog.findViewById(R.id.confirmmessage);
-            
-	  		noProviderMessage.setText("GPS and Network providers are unavailable");
-	 		
-	 		// Closes the dialog on click of OK button 
-	 		dialogOkButton.setOnClickListener(new OnClickListener() {
-	 						@Override
-	 						public void onClick(View v) {
-	 							dialog.dismiss();
-	 							onBackPressed();              							
-
-	 						}
-	 					});
-	 		 
-	 		dialog.show();
-
-	    	 //Toast.makeText(this, "GPS and Network providers are not available", Toast.LENGTH_SHORT).show();
-	     }    
+	    	 alertGPSDisabled();
+	    	 }    
 	     
 	     //Initialize the destination location fields
 	     if (lastKnownLocation != null) {
 	    	 
-	    	 currentLocation = lastKnownLocation; 	
+	    	 currentLocation = lastKnownLocation; 
+	    	 onLocationChanged(currentLocation);
+
 	    	 
 	    	 }
 	     else{
@@ -189,12 +168,12 @@ public class locateActivity extends Activity implements OnMarkerClickListener, L
 		 }
 		 
 		 // Pass both the source and destination location data to find the directions between both locations
-		 Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+src_lat_loc.latitude+","+src_lat_loc.longitude+"&daddr="+dest_lat_loc.latitude+","+dest_lat_loc.longitude));
-         startActivity(intent);
-         
-         /*Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("google.navigation:q=" + dest_lat_loc.latitude + "," + dest_lat_loc.longitude));
-         
+		 /*Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+src_lat_loc.latitude+","+src_lat_loc.longitude+"&daddr="+dest_lat_loc.latitude+","+dest_lat_loc.longitude));
          startActivity(intent);*/
+         
+         Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("google.navigation:q=" + dest_lat_loc.latitude + "," + dest_lat_loc.longitude));
+         
+         startActivity(intent);
 	  
 	   return true;
 	 }
@@ -214,6 +193,8 @@ public class locateActivity extends Activity implements OnMarkerClickListener, L
 			}
 			else
 			{
+				currentLocation = loc;			 
+
 				// Do nothing. Keep the currentLocation to be the last known location
 			}
 			 
@@ -242,41 +223,28 @@ public class locateActivity extends Activity implements OnMarkerClickListener, L
 	// Displays alert dialog to ask if the users wants to enable the GPS by navigating to the settings page
 	public void alertGPSDisabled() {
 	
-	LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
-	View layout = inflater.inflate(R.layout.gps_alert_dialog, (ViewGroup) findViewById(R.id.gps_root));
+		final Dialog dialog = new Dialog(context, R.style.Theme_Dialog);
+ 		
+ 		dialog.setContentView(R.layout.confirmdialog);
+ 		    		 
+ 		// Set the custom dialog components - EditText and Buttons
+  		Button dialogOkButton = (Button) dialog.findViewById(R.id.yesbutton);
+  		EditText noProviderMessage = (EditText) dialog.findViewById(R.id.confirmmessage);
+        
+  		noProviderMessage.setText("GPS and Network providers are unavailable");
+ 		
+ 		// Closes the dialog on click of OK button 
+ 		dialogOkButton.setOnClickListener(new OnClickListener() {
+ 						@Override
+ 						public void onClick(View v) {
+ 							dialog.dismiss();
+ 							onBackPressed();              							
 
-	AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-	alertDialogBuilder.setView(layout);
-		
-	// Creates alert dialog
-	final AlertDialog alertDialog = alertDialogBuilder.create();
-	
-	Button enableButton = (Button) layout.findViewById(R.id.enable_button);
-	Button ignoreButton = (Button) layout.findViewById(R.id.ignore_button);
-	
-	// On click of "go to settings" button, navigate to the settings page to enable GPS           						
-	enableButton.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						Intent callGPSSettingIntent = new Intent(
-								android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-								startActivity(callGPSSettingIntent);    					              							
-						
-					}
-				});
-	
-	// On click of "cancel" button, close the alert dialog           						
-	ignoreButton.setOnClickListener(new OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							alertDialog.dismiss(); 				
-						}
-					});
+ 						}
+ 					});
+ 		 
+ 		dialog.show();
 
-	alertDialogBuilder.setCancelable(false);	
-            		
-	// Displays the alert dialog
-	alertDialog.show();
 	}
        
  }

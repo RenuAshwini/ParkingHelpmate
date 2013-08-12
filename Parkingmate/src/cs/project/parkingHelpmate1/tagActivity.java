@@ -27,7 +27,7 @@
 ** License - 
 ******************************************************************************************/
 
-package cs.project.parkingHelpmate;
+package cs.project.parkingHelpmate1;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -59,7 +59,7 @@ public class tagActivity extends Activity implements LocationListener{
 	
 	LatLng des_lat_loc;
     final Context context = this;	
-	LocationManager locationManager_tag;
+	private LocationManager locationManager_tag;
 	private Location location;
 	private Location currentBestLocation = null;
 	private String LOCATION_SERVICE="location" ;
@@ -88,7 +88,7 @@ public class tagActivity extends Activity implements LocationListener{
 		    }
 	     else
 	     {
-	    	 
+	    	 alertGPSDisabled();
 	     }
 	     
 	     
@@ -96,7 +96,8 @@ public class tagActivity extends Activity implements LocationListener{
 	   //Initialize the destination location fields
 	     if (location != null) {
 	    	 
-	    	 currentBestLocation = location; 	
+	    	 currentBestLocation = location; 
+	    	 onLocationChanged(currentBestLocation);
 	    	 
 	    	 }
 	     else{
@@ -124,7 +125,7 @@ public class tagActivity extends Activity implements LocationListener{
 		 		dialog.show();
 
 
-	    	 //Toast.makeText(this, "Could not retrieve the location data ", Toast.LENGTH_SHORT).show();
+	    	 Toast.makeText(this, "Could not retrieve the location data ", Toast.LENGTH_SHORT).show();
 	    	 
 	     }		  
 		 }
@@ -154,13 +155,14 @@ public class tagActivity extends Activity implements LocationListener{
 		{
 			currentBestLocation = loc;
 		}
-		else if (loc.distanceTo(currentBestLocation) > 2)	
+		else if (loc.distanceTo(currentBestLocation) > 0.5)	
 		 {
-			 currentBestLocation = loc;			 
-			 
+			 currentBestLocation = loc;	
+			 			 
 		}
 		else
 		{
+			currentBestLocation = loc;
 			// Do nothing. Keep the currentBestLocation to be the last known location
 		}
 		 

@@ -27,9 +27,9 @@
 ** License - 
 ******************************************************************************************/
 
-package cs.project.parkingHelpmate;
-import cs.project.parkingHelpmate.ParkingTimer;
-import cs.project.parkingHelpmate.R;
+package cs.project.parkingHelpmate1;
+import cs.project.parkingHelpmate1.ParkingTimer;
+import cs.project.parkingHelpmate1.R;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;

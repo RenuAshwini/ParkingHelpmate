@@ -19,7 +19,7 @@
     <string name="button2">Notes</string>
     <string name="button3">Locate</string>
     <string name="button4">Settings</string>
-    <string name="settings_text1">Reminder at</string>
+    <string name="settings_text1">Reminder</string>
     <string name="settings_text3">minutes before</string> 
     <string name="settings_text2">15</string>  
     <string name="settings_text4">Alert Sound Settings</string>     
@@ -38,7 +38,7 @@
     <string name="dialog_button1">Save</string>   
     <string name="dialog_button2">Cancel</string>   
     <string name="ok_button">OK</string>      
-    <string name="home_button">Home</string>
+    <string name="home_button">Done</string>
     <string name="gpsalert_message">GPS is disabled. Would you like to enable it?</string> 
     <string name="gpsenable_button">Go to Settings</string>   
     <string name="gpscancel_button">Cancel</string>   

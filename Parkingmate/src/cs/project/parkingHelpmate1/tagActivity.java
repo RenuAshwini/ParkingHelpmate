@@ -1,9 +1,9 @@
 /**************************************************************************************
-** ParkingHelpmate- An open source android project to keep track of parking meter time
-** Application written in Java
+** ParkingHelpmate- An open source android project that helps to track parking meter time 
+** and to navigate to the vehicle location from current location
 ** Application uses Google Maps Android API v2
 **
-** Copyright (C) 2013 Renu Biradar and Ashwini Guttal
+** Copyright(C) 2013 Renu Biradar and Ashwini Guttal
 **
 ** This program is free software: you can redistribute it and/or modify it under 
 ** the terms of the GNU General Public License as published by the Free Software Foundation, 
@@ -15,29 +15,28 @@
 **
 ** You should have received a copy of the GNU General Public License along with this program. 
 ** If not, see http://www.gnu.org/licenses/.
+** Please see the file "License" in this distribution for license terms. 
 ** Below is the link to the file License.
-** https://github.com/RenuAshwini/ParkingHelpmate/License
+** https://github.com/RenuAshwini/ParkingHelpmate/License.txt
 **
 ** Following is the link for the repository- https://github.com/RenuAshwini/ParkingHelpmate
 **
-** Author - Renu Biradar and Ashwini Guttal
-** email: renu@pdx.edu and aguttal@pdx.edu
+** Authors - Renu Biradar and Ashwini Guttal
+** email  - renu.biradar@gmail.com and aguttal@gmail.com
 **
-** References - 
-** License - 
+** References - http://stackoverflow.com/questions/3145089/what-is-the-simplest-and-most-robust-way-to-get-the-users-current-location-in-a 
+**            - http://developer.android.com/google/play-services/location.html
+**            - http://www.mkyong.com/android/android-alert-dialog-example/
 ******************************************************************************************/
 
 package cs.project.parkingHelpmate1;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,7 +59,8 @@ public class tagActivity extends Activity implements LocationListener{
 	LatLng des_lat_loc;
     final Context context = this;	
 	private LocationManager locationManager_tag;
-	private Location location;
+	private Location gpsLocation;
+	private Location nwLocation;
 	private Location currentBestLocation = null;
 	private String LOCATION_SERVICE="location" ;
 
@@ -69,40 +69,54 @@ public class tagActivity extends Activity implements LocationListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.taglayout);	
 		
-		//LocationManager locationManager_tag;
-	   		
-		 
-	     locationManager_tag = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-	     	     
-	     if (locationManager_tag.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
-		    	
-	    	 // Requests the periodic updates from the GPS location provider if the GPS provider is enabled
-	    	 locationManager_tag.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000,0, this);
-	    	 location = locationManager_tag.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-		    }
-	     else if(locationManager_tag.isProviderEnabled(LocationManager.GPS_PROVIDER))
-	    	 {
-	    	 locationManager_tag.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000,0, this);
-	    	 location = locationManager_tag.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		locationManager_tag = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+	    
+	    // Checks if GPS provider is enabled
+		if(locationManager_tag.isProviderEnabled(LocationManager.GPS_PROVIDER))
+   	 	{
+	  	    // Requests the periodic updates from the GPS location provider if the GPS provider is enabled
+	    	locationManager_tag.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,0, this);
+	    	gpsLocation = locationManager_tag.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+	
+	    }
+		else
+		{
+	    	// Display a dialog box if the GPS provider is disabled
+			alertProviderDisabled();
+		}
+		
+	    // Checks if network provider is enabled
+   	   	if(locationManager_tag.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
+	    {
+	  	    // Requests the periodic updates from the network location provider if the network provider is enabled
+   	   		locationManager_tag.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0,0, this);
+	    	nwLocation = locationManager_tag.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+   	
+		}
+	    else
+	    {
+	    	// Display a dialog box if the network provider is disabled
+	    	alertProviderDisabled();
+	    }
+   
+	    // Gets the latest location data
+   	   	if ((gpsLocation != null) && (nwLocation != null)) {
+   	 
+   	   		if(gpsLocation.getTime() > nwLocation.getTime() )
+   	   		{
     	
-		    }
-	     else
-	     {
-	    	 alertGPSDisabled();
-	     }
-	     
-	     
-	     
-	   //Initialize the destination location fields
-	     if (location != null) {
+   	   			currentBestLocation = gpsLocation;
+   	   		}
+   	   		else
+   	   		{
+   	   			currentBestLocation = nwLocation;
+
+   	   		}
+   	   	}
+   	   	else{
 	    	 
-	    	 currentBestLocation = location; 
-	    	 onLocationChanged(currentBestLocation);
-	    	 
-	    	 }
-	     else{
-	    	 
-	    	 final Dialog dialog = new Dialog(context, R.style.Theme_Dialog);
+	    	
+   	   			final Dialog dialog = new Dialog(context, R.style.Theme_Dialog);
 		 		
 		 		dialog.setContentView(R.layout.confirmdialog);
 		 		    		 
@@ -125,10 +139,8 @@ public class tagActivity extends Activity implements LocationListener{
 		 		dialog.show();
 
 
-	    	 Toast.makeText(this, "Could not retrieve the location data ", Toast.LENGTH_SHORT).show();
-	    	 
-	     }		  
-		 }
+   	   		}		  
+	}
 	
 	//Send the destination latitude and longitude back to the ParkingTimer activity on click of back button
 	@Override
@@ -151,25 +163,24 @@ public class tagActivity extends Activity implements LocationListener{
 	@Override
 	public void onLocationChanged(Location loc) {
 		
+	 	// Save the latest location data as current location	
 		if(currentBestLocation == null)
 		{
 			currentBestLocation = loc;
 		}
-		else if (loc.distanceTo(currentBestLocation) > 0.5)	
+		else if (loc.distanceTo(currentBestLocation) > 2)	
 		 {
 			 currentBestLocation = loc;	
 			 			 
 		}
 		else
 		{
-			currentBestLocation = loc;
-			// Do nothing. Keep the currentBestLocation to be the last known location
+			// Do nothing. Keep the last known location as current location
 		}
 		 
 		 locationManager_tag.removeUpdates(this);
 		 des_lat_loc = new LatLng(currentBestLocation.getLatitude(), currentBestLocation.getLongitude());
-		 confirmDialog();
-	                     
+		 confirmDialog();	                     
 
 	}
 	
@@ -188,51 +199,36 @@ public class tagActivity extends Activity implements LocationListener{
 	       
 	    }
 	
-	// Displays alert dialog to ask if the users wants to enable the GPS by navigating to the settings page
-	public void alertGPSDisabled() {
+	// Displays alert dialog if both the GPS and network providers are disabled 
+	public void alertProviderDisabled() {
 		
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
-			View layout = inflater.inflate(R.layout.gps_alert_dialog, (ViewGroup) findViewById(R.id.gps_root));
+		final Dialog dialog = new Dialog(context, R.style.Theme_Dialog);
+ 		
+ 		dialog.setContentView(R.layout.confirmdialog);
+ 		    		 
+ 		// Set the custom dialog components - EditText and Buttons
+  		Button dialogOkButton = (Button) dialog.findViewById(R.id.yesbutton);
+  		EditText noProviderMessage = (EditText) dialog.findViewById(R.id.confirmmessage);
+        
+  		noProviderMessage.setText("GPS and Network providers are unavailable");
+ 		
+ 		// Closes the dialog on click of OK button 
+ 		dialogOkButton.setOnClickListener(new OnClickListener() {
+ 						@Override
+ 						public void onClick(View v) {
+ 							dialog.dismiss();
+ 							onBackPressed();              							
 
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-		alertDialogBuilder.setView(layout);
-			
-		// Creates alert dialog
-		final AlertDialog alertDialog = alertDialogBuilder.create();
-		
-		Button enableButton = (Button) layout.findViewById(R.id.enable_button);
-		Button ignoreButton = (Button) layout.findViewById(R.id.ignore_button);
-		
-		// On click of "go to settings" button, navigate to the settings page to enable GPS           						
-		enableButton.setOnClickListener(new OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							Intent callGPSSettingIntent = new Intent(
-									android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-									startActivity(callGPSSettingIntent);
-	    					              							
-							
-						}
-					});
-		
-		// On click of "cancel" button, close the alert dialog           						
-		ignoreButton.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-								alertDialog.dismiss();
-								
-							}
-					});
+ 						}
+ 					});
+ 		 
+ 		dialog.show();
 
-		alertDialogBuilder.setCancelable(false);		
-	            		
-		// Displays the alert dialog
-		alertDialog.show();
-		}
-	
+	}
+		
+	// Display dialog box once the location is tagged
 	public void confirmDialog()
 	{
-		// Custom dialog to save the parking notes entered by user  		
 		
 		final Dialog dialog = new Dialog(context, R.style.Theme_Dialog);
 		

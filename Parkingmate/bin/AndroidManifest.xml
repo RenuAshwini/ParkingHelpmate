@@ -1,4 +1,31 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!--**************************************************************************************
+** ParkingHelpmate- An open source android project that helps to track parking meter time 
+** and to navigate to the vehicle location from current location
+** Application uses Google Maps Android API v2
+**
+** Copyright(C) 2013 Renu Biradar and Ashwini Guttal
+**
+** This program is free software: you can redistribute it and/or modify it under 
+** the terms of the GNU General Public License as published by the Free Software Foundation, 
+** either version 3 of the License, or (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+** without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License along with this program. 
+** If not, see http://www.gnu.org/licenses/.
+** Please see the file "License" in this distribution for license terms. 
+** Below is the link to the file License.
+** https://github.com/RenuAshwini/ParkingHelpmate/License.txt
+**
+** Following is the link for the repository- https://github.com/RenuAshwini/ParkingHelpmate
+**
+** Authors - Renu Biradar and Ashwini Guttal
+** email  - renu.biradar@gmail.com and aguttal@gmail.com
+**
+** References - https://developers.google.com/maps/documentation/android/start#installing_the_google_maps_android_v2_api
+******************************************************************************************-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cs.project.parkingHelpmate1"
     android:versionCode="1"
@@ -18,13 +45,13 @@
         android:required="true"/>
     
     <uses-permission android:name="android.permission.INTERNET"/>
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-<uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-<!-- The following two permissions are not required to use
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+	<!-- The following two permissions are not required to use
      Google Maps Android API v2, but are recommended. -->
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -64,11 +91,10 @@
 	            android:value="cs.project.parkingHelpmate1.ParkingTimer" />
        </activity>
        
-         <meta-data
-    android:name="com.google.android.maps.v2.API_KEY"
-    android:value="AIzaSyBjGYB0Q_BnwgICxNERxBPC81rMS8UZi_U"/>
-       
-       
+       <meta-data
+    		android:name="com.google.android.maps.v2.API_KEY"
+    		android:value="AIzaSyBjGYB0Q_BnwgICxNERxBPC81rMS8UZi_U"/>
+            
     </application>
 
 </manifest>

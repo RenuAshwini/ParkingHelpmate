@@ -1,9 +1,9 @@
 /**************************************************************************************
-** ParkingHelpmate- An open source android project to keep track of parking meter time
-** Application written in Java
+** ParkingHelpmate- An open source android project that helps to track parking meter time 
+** and to navigate to the vehicle location from current location
 ** Application uses Google Maps Android API v2
 **
-** Copyright (C) 2013 Renu Biradar and Ashwini Guttal
+** Copyright(C) 2013 Renu Biradar and Ashwini Guttal
 **
 ** This program is free software: you can redistribute it and/or modify it under 
 ** the terms of the GNU General Public License as published by the Free Software Foundation, 
@@ -15,16 +15,18 @@
 **
 ** You should have received a copy of the GNU General Public License along with this program. 
 ** If not, see http://www.gnu.org/licenses/.
+** Please see the file "License" in this distribution for license terms. 
 ** Below is the link to the file License.
-** https://github.com/RenuAshwini/ParkingHelpmate/License
+** https://github.com/RenuAshwini/ParkingHelpmate/License.txt
 **
 ** Following is the link for the repository- https://github.com/RenuAshwini/ParkingHelpmate
 **
-** Author - Renu Biradar and Ashwini Guttal
-** email: renu@pdx.edu and aguttal@pdx.edu
+** Authors - Renu Biradar and Ashwini Guttal
+** email  -  renu.biradar@gmail.com and aguttal@gmail.com
 **
-** References - 
-** License - 
+** References - http://developer.android.com/training/basics/firstapp/starting-activity.html 
+**            - http://www.mkyong.com/android/android-alert-dialog-example/
+**            - http://stackoverflow.com/questions/10032003/how-to-make-a-countdown-timer-in-android
 ******************************************************************************************/
 
 package cs.project.parkingHelpmate1;

@@ -188,12 +188,9 @@ containing a value of this type.
         public static final int gold_frame=0x7f02001e;
         public static final int ic_launcher=0x7f02001f;
         public static final int rounded_alert=0x7f020020;
-        public static final int rounded_bluecolor=0x7f020021;
-        public static final int rounded_button=0x7f020022;
-        public static final int rounded_button1=0x7f020023;
-        public static final int rounded_nocolor=0x7f020024;
-        public static final int smallboxes=0x7f020025;
-        public static final int yellow_bar=0x7f020026;
+        public static final int rounded_button=0x7f020021;
+        public static final int rounded_nocolor=0x7f020022;
+        public static final int yellow_bar=0x7f020023;
     }
     public static final class id {
         public static final int action_settings=0x7f060031;
